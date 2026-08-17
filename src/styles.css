@@ -1,0 +1,653 @@
+:root {
+  --ink: #0f172a;
+  --ink-soft: #334155;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --surface: #ffffff;
+  --canvas: #f5f6f8;
+  --accent: #1d4ed8;
+  --accent-soft: #eef3ff;
+  --danger: #b91c1c;
+  --danger-soft: #fef2f2;
+  --driving: #1d4ed8;
+  --on-duty: #b45309;
+  --sleeper: #6d28d9;
+  --off-duty: #94a3b8;
+  --radius: 8px;
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font: 15px/1.55 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+/* Masthead ---------------------------------------------------------- */
+
+.masthead {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.masthead-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--accent);
+  position: relative;
+  flex: none;
+}
+
+.brand-mark::after {
+  content: '';
+  position: absolute;
+  inset: 8px 5px;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.brand-name {
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.brand-tagline,
+.masthead-note {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* Layout ------------------------------------------------------------ */
+
+.layout {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 350px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.column-form {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.column-results {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+
+.card-flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+.card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.card-head-padded {
+  padding: 18px 18px 0;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Form -------------------------------------------------------------- */
+
+.trip-form {
+  display: grid;
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+/* The sidebar is too narrow for two columns once a datetime input is involved:
+   its intrinsic minimum width is wider than half the card. */
+.field-row {
+  display: grid;
+  gap: 14px;
+}
+
+label {
+  font-size: 12.5px;
+  font-weight: 550;
+  color: var(--ink-soft);
+}
+
+input {
+  width: 100%;
+  min-width: 0;
+  padding: 9px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.field-hint,
+.field-error {
+  font-size: 12px;
+}
+
+.field-hint {
+  color: var(--muted);
+}
+
+.field-error {
+  color: var(--danger);
+}
+
+.button-primary {
+  padding: 10px 16px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 550;
+  color: #fff;
+  background: var(--accent);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.button-primary:hover:not(:disabled) {
+  background: #1a44bd;
+}
+
+.button-primary:disabled {
+  background: var(--line-strong);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.alert {
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+}
+
+.notice {
+  margin-top: 14px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #92400e;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+}
+
+/* Empty and loading states ------------------------------------------ */
+
+.empty-state {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding: 32px;
+}
+
+.empty-state p {
+  color: var(--muted);
+  font-size: 13.5px;
+  max-width: 62ch;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--line-strong);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Summary ----------------------------------------------------------- */
+
+/* Fixed column counts keep the seamless rule grid from leaving a half-empty
+   final row, which an auto-fit track count produces at most widths. */
+.stat-grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.stat {
+  background: var(--surface);
+  padding: 12px 14px;
+}
+
+.stat dt {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stat dd {
+  margin: 3px 0 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-note {
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+/* Map --------------------------------------------------------------- */
+
+.map-frame {
+  height: 420px;
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.map-legend li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.map-pin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.35);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.map-pin-start {
+  background: #0f172a;
+}
+.map-pin-pickup {
+  background: #047857;
+}
+.map-pin-dropoff {
+  background: #b91c1c;
+}
+.map-pin-fuel {
+  background: var(--on-duty);
+}
+.map-pin-break {
+  background: #0891b2;
+}
+.map-pin-rest {
+  background: var(--sleeper);
+}
+.map-pin-restart {
+  background: #be185d;
+  font-size: 9px;
+}
+
+.leaflet-container {
+  font: inherit;
+}
+
+/* Schedule ---------------------------------------------------------- */
+
+.schedule-day + .schedule-day {
+  margin-top: 18px;
+}
+
+.schedule-date {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+.schedule {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.schedule-item {
+  display: grid;
+  grid-template-columns: 54px 14px 1fr;
+  align-items: start;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+.schedule-time {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+
+.schedule-dot {
+  width: 9px;
+  height: 9px;
+  margin-top: 6px;
+  border-radius: 50%;
+  justify-self: center;
+}
+
+.schedule-dot.driving {
+  background: var(--driving);
+}
+.schedule-dot.on-duty {
+  background: var(--on-duty);
+}
+.schedule-dot.sleeper {
+  background: var(--sleeper);
+}
+.schedule-dot.off-duty {
+  background: var(--off-duty);
+}
+
+.schedule-title {
+  font-size: 13.5px;
+  font-weight: 550;
+}
+
+.schedule-meta {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* Log sheets -------------------------------------------------------- */
+
+.day-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 14px;
+}
+
+.day-tab {
+  flex: none;
+  display: grid;
+  gap: 1px;
+  padding: 7px 12px;
+  font: inherit;
+  text-align: left;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+}
+
+.day-tab:hover {
+  border-color: var(--accent);
+}
+
+.day-tab.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.day-tab-number {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.day-tab-date {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.day-tab.is-active .day-tab-date {
+  color: var(--accent);
+}
+
+.log-totals {
+  margin: 0 0 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.log-totals dt {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.log-totals dd {
+  margin: 1px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.log-sheet {
+  margin: 0;
+  position: relative;
+}
+
+.log-sheet img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.log-sheet-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.log-sheet figcaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.log-sheet figcaption a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.log-sheet figcaption a:hover {
+  text-decoration: underline;
+}
+
+/* Footer ------------------------------------------------------------ */
+
+.footer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 8px 24px 32px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Responsive -------------------------------------------------------- */
+
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .column-form {
+    position: static;
+  }
+
+  .masthead-inner {
+    padding: 12px 16px;
+  }
+
+  .masthead-note {
+    display: none;
+  }
+
+  .map-frame {
+    height: 320px;
+  }
+
+  .footer {
+    padding: 0 16px 24px;
+  }
+}
+
+@media (max-width: 720px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .card {
+    padding: 14px;
+  }
+
+  .card-head-padded {
+    padding: 14px 14px 0;
+  }
+
+  .stat dd {
+    font-size: 17px;
+  }
+}
