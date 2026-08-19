@@ -35,6 +35,15 @@ export default function RouteSummary({ summary }) {
         ))}
       </dl>
 
+      {summary.break_count === 0 && (
+        <p className="notice">
+          No separate 30-minute break is scheduled. Under 395.3(a)(3)(ii) any consecutive
+          30 minutes off driving resets the break clock, so the hour spent loading at
+          pickup or unloading at dropoff already satisfies it. A standalone break is added
+          only when 8 hours of driving build up without one.
+        </p>
+      )}
+
       {summary.cycle_restart_count > 0 && (
         <p className="notice">
           The 70-hour cycle runs out during this trip. The plan includes{' '}
