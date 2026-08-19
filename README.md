@@ -5,6 +5,11 @@ hours-of-service limits. Enter a current location, a pickup, a dropoff and the
 hours already used in the 70-hour cycle; it shows the route on a map, the full
 stop-by-stop schedule, and a rendered driver's daily log for each day.
 
+| | |
+| --- | --- |
+| **Live app** | **https://haullog.vercel.app** |
+| **API it calls** | https://haullog.pythonanywhere.com/api/ |
+
 The Django API lives in a separate repository:
 [HaulLog_backend](https://github.com/HafizDanialFahim/HaulLog_backend).
 
