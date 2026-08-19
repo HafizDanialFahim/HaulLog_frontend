@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { departureValue } from '../lib/format'
 
 const MAX_CYCLE_HOURS = 70
 
@@ -8,21 +9,23 @@ const FIELDS = [
   { name: 'dropoff_location', label: 'Dropoff location', placeholder: 'Denver, CO' },
 ]
 
-const defaultDeparture = () => {
-  const now = new Date()
-  const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
-    now.getDate(),
-  ).padStart(2, '0')}`
-  return `${date}T08:00`
-}
-
 const initialValues = {
   current_location: '',
   pickup_location: '',
   dropoff_location: '',
   cycle_used_hours: '',
-  departure: defaultDeparture(),
+  departure: departureValue(),
 }
+
+const allTouched = () => Object.fromEntries(Object.keys(initialValues).map((name) => [name, true]))
+
+const toPayload = (values) => ({
+  current_location: values.current_location.trim(),
+  pickup_location: values.pickup_location.trim(),
+  dropoff_location: values.dropoff_location.trim(),
+  cycle_used_hours: Number(values.cycle_used_hours),
+  departure: `${values.departure}:00`,
+})
 
 function validate(values) {
   const errors = {}
@@ -43,9 +46,20 @@ function validate(values) {
   return errors
 }
 
-export default function TripForm({ onSubmit, isPlanning, serverErrors }) {
+export default function TripForm({ onSubmit, isPlanning, serverErrors, preset }) {
   const [values, setValues] = useState(initialValues)
   const [touched, setTouched] = useState({})
+
+  // A sample trip picked in the sidebar fills the form and, when the values are
+  // valid, plans it straight away so testing a case is a single click.
+  useEffect(() => {
+    if (!preset) return
+    const next = { ...initialValues, ...preset.values }
+    setValues(next)
+    setTouched(allTouched())
+    if (Object.keys(validate(next)).length === 0) onSubmit(toPayload(next))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preset])
 
   const localErrors = validate(values)
   const errors = { ...localErrors, ...serverErrors }
@@ -56,16 +70,10 @@ export default function TripForm({ onSubmit, isPlanning, serverErrors }) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    setTouched(Object.fromEntries(Object.keys(initialValues).map((name) => [name, true])))
+    setTouched(allTouched())
     if (Object.keys(localErrors).length > 0) return
 
-    onSubmit({
-      current_location: values.current_location.trim(),
-      pickup_location: values.pickup_location.trim(),
-      dropoff_location: values.dropoff_location.trim(),
-      cycle_used_hours: Number(values.cycle_used_hours),
-      departure: `${values.departure}:00`,
-    })
+    onSubmit(toPayload(values))
   }
 
   return (

@@ -55,3 +55,12 @@ export const KIND_LABELS = {
   CYCLE_RESTART: '34-hour restart',
   OFF_DUTY: 'Off duty',
 }
+
+/** Today at the given wall-clock time, in the value format a datetime-local input expects. */
+export function departureValue(time = '08:00') {
+  const now = new Date()
+  const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
+    now.getDate(),
+  ).padStart(2, '0')}`
+  return `${date}T${time}`
+}

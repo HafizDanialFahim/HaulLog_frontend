@@ -116,7 +116,12 @@ p {
 .column-form {
   position: sticky;
   top: 24px;
+  /* The form plus the sample list can outgrow a short viewport, so let the
+     column scroll on its own rather than stranding its lower half. */
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
   display: grid;
+  align-content: start;
   gap: 12px;
 }
 
@@ -613,6 +618,8 @@ input[aria-invalid='true'] {
 
   .column-form {
     position: static;
+    max-height: none;
+    overflow-y: visible;
   }
 
   .masthead-inner {
@@ -650,4 +657,61 @@ input[aria-invalid='true'] {
   .stat dd {
     font-size: 17px;
   }
+}
+
+/* Sample trips ------------------------------------------------------- */
+
+.sample-trips h2 {
+  font-size: 15px;
+}
+
+.sample-trips .muted {
+  margin: 6px 0 0;
+}
+
+.sample-trips ul {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.sample-trips button {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  padding: 9px 11px;
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sample-trips button:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.sample-trips button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.sample-name {
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.sample-route,
+.sample-expected {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sample-expected {
+  color: var(--ink-soft);
 }

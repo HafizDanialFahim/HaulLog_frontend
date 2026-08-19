@@ -3,6 +3,7 @@ import { ApiError, planTrip } from './api'
 import LogViewer from './components/LogViewer'
 import RouteMap from './components/RouteMap'
 import RouteSummary from './components/RouteSummary'
+import SampleTrips from './components/SampleTrips'
 import ScheduleList from './components/ScheduleList'
 import TripForm from './components/TripForm'
 
@@ -11,6 +12,7 @@ export default function App() {
   const [isPlanning, setIsPlanning] = useState(false)
   const [error, setError] = useState(null)
   const [fieldErrors, setFieldErrors] = useState({})
+  const [preset, setPreset] = useState(null)
   const requestRef = useRef(null)
 
   const handleSubmit = async (input) => {
@@ -33,6 +35,9 @@ export default function App() {
     }
   }
 
+  // A fresh object every time, so picking the same sample twice still re-runs it.
+  const handleSample = (sample) => setPreset({ values: sample.values })
+
   return (
     <div className="app">
       <header className="masthead">
@@ -50,13 +55,20 @@ export default function App() {
 
       <main className="layout">
         <div className="column-form">
-          <TripForm onSubmit={handleSubmit} isPlanning={isPlanning} serverErrors={fieldErrors} />
+          <TripForm
+            onSubmit={handleSubmit}
+            isPlanning={isPlanning}
+            serverErrors={fieldErrors}
+            preset={preset}
+          />
 
           {error && (
             <p className="alert" role="alert">
               {error}
             </p>
           )}
+
+          <SampleTrips onPick={handleSample} isPlanning={isPlanning} />
         </div>
 
         <div className="column-results">
